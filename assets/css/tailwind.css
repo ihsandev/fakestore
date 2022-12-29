@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bgcolor: #f8fafc;
+  --primary: #0f766e;
+}
+
+* {
+  font-family: 'Sarabun', sans-serif;
+}
+
+body {
+  background-color: var(--bgcolor);
+}
