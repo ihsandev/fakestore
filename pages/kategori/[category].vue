@@ -3,7 +3,7 @@
   <section>
     <div class="flex-1 pt-16 px-6">
       <div v-if="productStore.loading">Loading...</div>
-      <div v-else class="grid grid-cols-4 gap-6 items-center justify-between">
+      <div v-else class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-between">
         <NuxtLink
           :to="`/produk/${product.id}`"
           v-for="product in productStore.productsCategory" :key="product.id"
@@ -28,7 +28,7 @@ import { useProductsStore } from '@/stores/products';
   productStore.getProductsByCategory(category)
 
   definePageMeta({
-    layout: 'base'
+    layout: 'detail-product'
   })
 </script>
 

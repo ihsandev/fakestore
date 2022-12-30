@@ -1,13 +1,13 @@
 <template>
   <header class="fixed top-0 mx-auto max-w-screen-md left-0 right-0">
     <nav :class="`flex gap-8 items-center py-2 px-8 ${showColor.bgColor} ${showColor.textColor}`">
-      <div v-if="isDetail" class="flex flex-1">
-        <NuxtLink to="/">
+      <div v-if="isDetail || isAuth" class="flex flex-1">
+        <NuxtLink :class="`${isAuth ? 'bg-emerald-700 text-white w-10 h-10 flex items-center justify-center rounded-full' : ''}`" to="/">
           <span class="material-icons-outlined">
             arrow_back
           </span>
         </NuxtLink>
-        <span class="ml-3 truncate">{{ title }}</span>
+        <span v-if="isDetail" class="ml-3">{{ title }}</span>
       </div>
       <div v-else-if="isCategory" class="flex flex-1 bg-slate-900 text-white">
         <div>
@@ -23,13 +23,19 @@
           placeholder="Cari barang.." 
         />
       </div>
-     <Cart />
+     <Cart v-if="!isAuth" />
     </nav>
   </header>
 </template>
 
 <script setup>
-  const { isDetail, isCategory, title } = defineProps(['isDetail', 'title', 'isCategory'])
+  const {isDetail, isCategory} = defineProps([
+    'title', 
+    'isDetail', 
+    'isCategory',
+    'isAuth'
+  ])
+
   const showColor = computed(() => {
     let bgColor = '';
     let textColor = 'text-slate-900'

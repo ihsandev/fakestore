@@ -1,6 +1,6 @@
 <template>
   <CardSection :title="'Kategori'" :icon="'category'">
-    <div class="grid grid-cols-4 justify-items-center justify-between w-full">
+    <div class="grid gap-6 grid-cols-3 md:grid-cols-4 justify-items-center justify-between w-full">
       <IconMenu 
         v-for="(category, index) in productStore.categories" 
         :key="index" 
@@ -19,7 +19,6 @@
   const productStore = useProductsStore()
   productStore.getCategories()
 
-  console.log(productStore.categories)
 </script>
 
 <style scoped>

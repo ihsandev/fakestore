@@ -1,4 +1,5 @@
 <template>
+  <Navbar :is-category="true" :title="'Kategori'" />
   <section class="flex">
     <div class="px-1 bg-slate-200 min-h-screen pt-14">
       <IconMenu 
@@ -15,7 +16,7 @@
     </div>
     <div class="flex-1 pt-16 px-6">
       <div v-if="productStore.loading">Loading...</div>
-      <div v-else class="grid grid-cols-4 gap-6 items-center justify-between">
+      <div v-else class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-between">
         <NuxtLink
           :to="`/produk/${product.id}`"
           v-for="product in productStore.productsCategory" :key="product.id"
