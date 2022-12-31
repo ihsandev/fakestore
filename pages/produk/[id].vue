@@ -14,17 +14,45 @@
       </div>
     </div>
   </section>
-  <BottomCheckout :price="product.price" />
+  <BottomCheckout :price="product.price" :on-buy-now="handleBuyNow" :is-product-exsist="isProductExist" />
+  <Loading :show-loading="loading" />
 </template>
 
 <script setup>
+import { useProductsStore } from '~~/stores/products';
+import useFormatDate from '@/composable/useFormatDate';
+import useProductExsist from '~~/composable/useProductExsist';
+
+  const loading = ref(false)
   const { id } = useRoute().params
   const { baseURL } = useRuntimeConfig().public 
   const uri = `${baseURL}/products/${id}`
   const product = await $fetch(uri)
+  const productStore = useProductsStore()
+  const { isProductExist } = useProductExsist(productStore.carts, id)
+
+  onMounted(() => {
+    productStore.getCarts()
+  })
+
+  const handleBuyNow = () => {
+    const date = useFormatDate(Date.now())
+    const payload = {
+      ...product,
+      date
+    }
+    productStore.addToCart(payload)
+    loading.value = true
+    setTimeout(() => {
+      loading.value = false
+      navigateTo('/keranjang')
+    }, 2000);
+  }
+
   definePageMeta({
     layout: 'detail-product'
   })
+  
 </script>
 
 <style scoped>

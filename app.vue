@@ -2,7 +2,7 @@
   <div>
     <NuxtLayout>
       <NuxtPage/>
-      <Loading v-if="loading" />
+      <Loading :show-loading="loading" />
     </NuxtLayout>
   </div>
 </template>

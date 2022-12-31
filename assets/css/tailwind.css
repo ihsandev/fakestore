@@ -14,3 +14,20 @@
 body {
   background-color: var(--bgcolor);
 }
+
+.counter-cart {
+  position: absolute;
+  top: -2px;
+  right: -6px;
+  min-width: 16px;
+  min-height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+}
