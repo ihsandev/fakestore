@@ -8,7 +8,7 @@
         <span v-else :class="`material-icons-outlined text-7xl ${iconColor || 'text-orange-500'}`">
           {{icon || 'security'}}
         </span>
-        <h1 class="md:ml-4 md:text-4xl font-extrabold text-slate-800">{{title}}</h1>
+        <h1 class="md:ml-4 md:text-4xl font-extrabold text-slate-800 capitalize">{{title}}</h1>
       </div>
       <slot />
     </div>

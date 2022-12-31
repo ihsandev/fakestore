@@ -43,6 +43,9 @@ export const useProductsStore = defineStore('products', {
       } finally {
         this.loading = false
       }
+    },
+    async addToCart() {
+
     }
   }
 })

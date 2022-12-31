@@ -1,6 +1,6 @@
 <template>
   <header class="fixed top-0 mx-auto max-w-screen-md left-0 right-0">
-    <nav :class="`flex gap-8 items-center py-2 px-8 ${showColor.bgColor} ${showColor.textColor}`">
+    <nav :class="`flex gap-8 items-center py-2 px-8 ${navbarStyle ? 'bg-white' : showColor.bgColor} ${showColor.textColor}`">
       <div v-if="isDetail || isAuth" class="flex flex-1">
         <NuxtLink :class="`${isAuth ? 'bg-emerald-700 text-white w-10 h-10 flex items-center justify-center rounded-full' : ''}`" to="/">
           <span class="material-icons-outlined">
@@ -33,8 +33,31 @@
     'title', 
     'isDetail', 
     'isCategory',
-    'isAuth'
+    'isAuth',
   ])
+
+  const navbarStyle = ref(false)
+
+  const doScroll = () => {
+    const height = window.pageYOffset
+    if(height > 200) {
+      navbarStyle.value = true
+    } else {
+      navbarStyle.value = false
+    }
+  }
+
+  onMounted(() => {
+    if(!isDetail && !isCategory && process.client){
+      window.addEventListener("scroll", doScroll);
+    }
+  })
+
+  onUnmounted(() => {
+    if(!isDetail && !isCategory && process.client){
+      window.removeEventListener("scroll", doScroll);  
+    }
+  })
 
   const showColor = computed(() => {
     let bgColor = '';

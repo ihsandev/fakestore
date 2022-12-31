@@ -7,3 +7,7 @@
     <BottomMenu />
   </section>
 </template>
+
+<script setup>
+
+</script>

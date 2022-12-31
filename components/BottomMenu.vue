@@ -23,11 +23,6 @@
       label: 'Kategori'
     },
     {
-      path: '/toko-saya',
-      icon: 'storefront',
-      label: 'Toko Saya'
-    },
-    {
       path: '/transaksi',
       icon: 'receipt_long',
       label: 'Transaksi'

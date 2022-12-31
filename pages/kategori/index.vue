@@ -14,7 +14,7 @@
         @select-category="handleSelectCategory"
       />
     </div>
-    <div class="flex-1 pt-16 px-6">
+    <div class="flex-1 pt-16 px-6 max-h-screen overflow-y-auto pb-28">
       <div v-if="productStore.loading">Loading...</div>
       <div v-else class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-between">
         <NuxtLink
