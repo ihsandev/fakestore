@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-  import { useProductsStore } from '@/stores/products';
+  import { useProductsStore } from '~~/stores/products';
 
   const productStore = useProductsStore()
   productStore.getProducts()

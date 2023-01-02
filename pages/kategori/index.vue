@@ -34,8 +34,8 @@
 </template>
 
 <script setup>
-  import useCategories from '@/composable/useCategories'
-  import { useProductsStore } from '@/stores/products';
+  import useCategories from '~~/composable/useCategories'
+  import { useProductsStore } from '~~/stores/products';
   
   const categories = await useCategories()
   const category = ref(categories[0].name)

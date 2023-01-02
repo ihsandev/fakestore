@@ -1,16 +1,16 @@
 export default async function useCategories() {
   const { baseURL } = useRuntimeConfig().public 
   const uri = `${baseURL}/products/categories`
-  const categories = await $fetch(uri)
+  const categories:any = await $fetch(uri)
 
-  const capitalized = (name) => {
+  const capitalized = (name:any) => {
     const capitalizedFirst = name[0].toUpperCase();
     const rest = name.slice(1);
 
     return capitalizedFirst + rest;
   }
 
-  const mapCategories = categories.map(category => {
+  const mapCategories = categories.map((category:any) => {
     let icon = 'category';
     if(category === "electronics") {
       icon = 'devices'

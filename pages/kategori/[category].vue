@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { useProductsStore } from '@/stores/products';
+import { useProductsStore } from '~~/stores/products';
 
   const { category } = useRoute().params
   const productStore = useProductsStore()

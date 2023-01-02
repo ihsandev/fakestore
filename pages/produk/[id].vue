@@ -20,7 +20,7 @@
 
 <script setup>
 import { useProductsStore } from '~~/stores/products';
-import useFormatDate from '@/composable/useFormatDate';
+import useFormatDate from '~~/composable/useFormatDate';
 import useProductExsist from '~~/composable/useProductExsist';
 
   const loading = ref(false)

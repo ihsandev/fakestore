@@ -1,4 +1,4 @@
-export default function useFormatDate(time) {
+export default function useFormatDate(time: any) {
   const date = new Date(time);
   
   // Get year, month, and day part from the date

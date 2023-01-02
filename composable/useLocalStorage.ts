@@ -1,12 +1,12 @@
 export default function useLocalStorage() {
   
-  const setStorage = (name, data) => {
+  const setStorage = (name:string, data:any) => {
     localStorage.setItem(name, JSON.stringify(data))
   }
 
-  const getStorage = (name) => {
-    const newData = localStorage.getItem(name)
-    function isJsonString(str) {
+  const getStorage = (name:string) => {
+    const newData:any = localStorage.getItem(name)
+    function isJsonString(str:string) {
       try {
           JSON.parse(str);
       } catch (e) {

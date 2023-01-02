@@ -1,18 +1,18 @@
-import useToken from "@/composable/useToken"
+import useToken from "~~/composable/useToken"
 
 export const useAuthStore = defineStore('auth', {
-  state: () => ({
+  state: ():any => ({
     token: null,
     user: null,
     loading: false,
     error: null
   }),
   actions: {
-    async login(body) {
+    async login(body:any) {
       const { baseURL } = useRuntimeConfig().public 
       try {
         this.loading = true
-        const res = await $fetch('/auth/login', {baseURL, method: 'POST', body})
+        const res : any = await $fetch('/auth/login', {baseURL, method: 'POST', body})
         const cookie = useCookie('token')
         cookie.value = res.token
         await navigateTo('/akun')

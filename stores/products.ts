@@ -1,11 +1,11 @@
-import useProducts from "@/composable/useProducts"
-import useCategories from "@/composable/useCategories"
-import useProductsCategory from "@/composable/useProductsCategory"
+import useProducts from "~~/composable/useProducts"
+import useCategories from "~~/composable/useCategories"
+import useProductsCategory from "~~/composable/useProductsCategory"
 import useLocalStorage from "~~/composable/useLocalStorage"
 import useProductExsist from "~~/composable/useProductExsist"
 
 export const useProductsStore = defineStore('products', {
-  state: () => ({
+  state: ():any => ({
     products: [],
     categories: [],
     productsCategory: [],
@@ -14,7 +14,7 @@ export const useProductsStore = defineStore('products', {
   }),
 
   actions: {
-    async getProducts(params) {
+    async getProducts(params:any) {
       try {
         this.loading = true
         const products = await useProducts(params)
@@ -36,21 +36,21 @@ export const useProductsStore = defineStore('products', {
         this.loading = false
       }
     },
-    async getProductsByCategory(category) {
+    async getProductsByCategory(category:string) {
       try {
         this.loading = true
         const response = await useProductsCategory(category)
         this.productsCategory = response
-      } catch (error) {
+      } catch (error:any) {
         throw Error(error.message)
       } finally {
         this.loading = false
       }
     },
-    addToCart(product) {
+    addToCart(product:any) {
       const { setStorage } = useLocalStorage()
-      const newData = [...this.carts]
-      const { index, isProductExist } = useProductExsist(newData, product.id)
+      const newData:any = [...this.carts]
+      const { index, isProductExist } :any = useProductExsist(newData, product.id)
       if(isProductExist) {
         newData[index].qty++
       } else {
@@ -66,7 +66,7 @@ export const useProductsStore = defineStore('products', {
         this.carts = data
       }
     },
-    removeCart(idx) {
+    removeCart(idx: number) {
       const { setStorage } = useLocalStorage()
       const newData = [...this.carts]
       if(newData[idx].qty > 1) {

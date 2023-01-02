@@ -1,3 +1,3 @@
-export default function useFormatPrice(value) {
+export default function useFormatPrice(value:any) {
   return 'Rp.' + Number.parseFloat(value).toFixed(2)
 }
