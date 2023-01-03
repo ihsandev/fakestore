@@ -5,7 +5,7 @@
       <slot />
     </div>
   </section>
-  <Loading v-if="loadingAuth.loading" />
+  <Loading :show-loading="loadingAuth.loading" />
 </template>
 
 <script setup>

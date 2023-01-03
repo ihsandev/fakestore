@@ -47,35 +47,60 @@ export const useProductsStore = defineStore('products', {
         this.loading = false
       }
     },
-    addToCart(product:any) {
-      const { setStorage } = useLocalStorage()
+    async addToCart(id:number, product:any) {
+      const newData:any = [...this.carts]
+      try {
+        this.loading = true
+        const data = await $fetch('/api/add-cart', {method: 'POST', body: {...product, qty: 1, id}})
+        if(data.success) {
+          newData.push({...product, qty: 1, id})
+          this.carts = newData
+          navigateTo('/keranjang')
+        }
+      } catch (error) {
+        return error;
+      } finally {
+        this.loading = false
+      }
+    },
+    async getCarts() {
+      try {
+        this.loading = true
+        const res = await $fetch('/api/carts')
+        if(res.data) {
+          this.carts = res.data
+        }
+      } catch (error) {
+        return error;        
+      } finally {
+        this.loading = false
+      }
+    },
+    async increaseCart(product:any) {
       const newData:any = [...this.carts]
       const { index, isProductExist } :any = useProductExsist(newData, product.id)
-      if(isProductExist) {
-        newData[index].qty++
-      } else {
-        newData.push({product, qty: 1})
-      }
-      this.carts = newData
-      setStorage('carts', newData)
-    },
-    getCarts() {
-      const { getStorage } = useLocalStorage()
-      const data = getStorage('carts')
-      if(data) {
-        this.carts = data
+      const data = await $fetch(`/api/update-cart?id=${product.id}`, {method: 'PUT', body: {qty: 1}})
+      if(data.success) {
+        if(isProductExist) {
+          newData[index].qty++
+        }
+        this.carts = newData
       }
     },
-    removeCart(idx: number) {
-      const { setStorage } = useLocalStorage()
+    async decreaseCart(product:any, idx: number) {
       const newData = [...this.carts]
-      if(newData[idx].qty > 1) {
-        newData[idx].qty--
+      if(product.qty > 1 && newData[idx].qty > 1) {
+        const data = await $fetch(`/api/update-cart?id=${product.id}`, {method: 'PUT', body: {qty: -1}})
+        if(data.success) {
+          newData[idx].qty--
+        }
       } else {
-        newData.splice(idx, 1)
+        const data = await $fetch(`/api/delete-cart?id=${product.id}`, {method: 'DELETE'})
+        if(data.success) {
+          newData.splice(idx, 1)
+        }
       }
       this.carts = newData
-      setStorage('carts', newData)
     }
   }
 })

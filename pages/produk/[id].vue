@@ -1,6 +1,6 @@
 <template>
   <Navbar :is-detail="true" :title="product.title" />
-  <section>
+  <section class="py-16">
     <div class="w-full h-96 bg-white flex justify-center mb-3">
       <NuxtImg :src="product.image" class="h-96" />
     </div>
@@ -15,15 +15,13 @@
     </div>
   </section>
   <BottomCheckout :price="product.price" :on-buy-now="handleBuyNow" :is-product-exsist="isProductExist" />
-  <Loading :show-loading="loading" />
+  <Loading :show-loading="productStore.loading" />
 </template>
 
 <script setup>
 import { useProductsStore } from '~~/stores/products';
-import useFormatDate from '~~/composable/useFormatDate';
 import useProductExsist from '~~/composable/useProductExsist';
 
-  const loading = ref(false)
   const { id } = useRoute().params
   const { baseURL } = useRuntimeConfig().public 
   const uri = `${baseURL}/products/${id}`
@@ -36,17 +34,7 @@ import useProductExsist from '~~/composable/useProductExsist';
   })
 
   const handleBuyNow = () => {
-    const date = useFormatDate(Date.now())
-    const payload = {
-      ...product,
-      date
-    }
-    productStore.addToCart(payload)
-    loading.value = true
-    setTimeout(() => {
-      loading.value = false
-      navigateTo('/keranjang')
-    }, 2000);
+    productStore.addToCart(id, product)
   }
 
   definePageMeta({

@@ -1,7 +1,7 @@
-export default function useProductExsist(products = [], productId) {
+export default function useProductExsist(products = [], productId:any) {
   let productIndex;
-  const isProductExist = products.filter((item, index) => {
-    if(String(item.product.id) === String(productId)) {
+  const isProductExist = products.filter((item:any, index) => {
+    if(String(item.id) === String(productId)) {
       productIndex = index;
       return true
     } else {
