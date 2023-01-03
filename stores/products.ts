@@ -3,6 +3,7 @@ import useCategories from "~~/composable/useCategories"
 import useProductsCategory from "~~/composable/useProductsCategory"
 import useLocalStorage from "~~/composable/useLocalStorage"
 import useProductExsist from "~~/composable/useProductExsist"
+import useToken from "~~/composable/useToken"
 
 export const useProductsStore = defineStore('products', {
   state: ():any => ({
@@ -49,11 +50,13 @@ export const useProductsStore = defineStore('products', {
     },
     async addToCart(id:number, product:any) {
       const newData:any = [...this.carts]
+      const userToken = useToken()
       try {
         this.loading = true
-        const data = await $fetch('/api/add-cart', {method: 'POST', body: {...product, qty: 1, id}})
+        const payload = {...product, qty: 1, id, userId: userToken.user.sub}
+        const data = await $fetch('/api/add-cart', {method: 'POST', body: payload})
         if(data.success) {
-          newData.push({...product, qty: 1, id})
+          newData.push(payload)
           this.carts = newData
           navigateTo('/keranjang')
         }
@@ -64,11 +67,13 @@ export const useProductsStore = defineStore('products', {
       }
     },
     async getCarts() {
+      const userToken = useToken()
       try {
         this.loading = true
         const res = await $fetch('/api/carts')
+        const data = res.data.filter((item:any) => item.userId === userToken.user.sub)
         if(res.data) {
-          this.carts = res.data
+          this.carts = data
         }
       } catch (error) {
         return error;        
