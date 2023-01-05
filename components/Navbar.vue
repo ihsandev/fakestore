@@ -49,14 +49,16 @@
     }
   }
 
+  const isUpdateScroll = !isDetail && !isCategory && !isTransaction && !isAccount && process.client;
+
   onMounted(() => {
-    if(!isDetail && !isCategory && process.client){
+    if(isUpdateScroll){
       window.addEventListener("scroll", doScroll);
     }
   })
 
   onUnmounted(() => {
-    if(!isDetail && !isCategory && process.client){
+    if(isUpdateScroll){
       window.removeEventListener("scroll", doScroll);  
     }
   })
