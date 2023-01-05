@@ -9,13 +9,13 @@
         </NuxtLink>
         <span v-if="isDetail" class="ml-3">{{ title }}</span>
       </div>
-      <div v-else-if="isCategory" class="flex flex-1 bg-slate-900 text-white">
-        <div>
+      <div v-else-if="isTransaction || isCategory || isAccount" class="flex flex-1 bg-slate-900 text-white">
+        <div v-if="isTransaction">
           <span class="material-icons-outlined">
-            search
+            tune
           </span>
         </div>
-        <span class="ml-3 truncate">{{ title }}</span>
+        <span :class="`${isTransaction && 'ml-3'} truncate`">{{ title }}</span>
       </div>
       <div v-else class="flex-1">
         <input 
@@ -29,11 +29,13 @@
 </template>
 
 <script setup>
-  const {isDetail, isCategory} = defineProps([
+  const {isDetail, isCategory, isTransaction, isAccount} = defineProps([
     'title', 
     'isDetail', 
     'isCategory',
     'isAuth',
+    'isTransaction',
+    'isAccount'
   ])
 
   const navbarStyle = ref(false)
@@ -64,7 +66,7 @@
     let textColor = 'text-slate-900'
     if(isDetail) {
       bgColor = 'bg-white'
-    } else if(isCategory) {
+    } else if(isCategory || isTransaction || isAccount) {
       bgColor = 'bg-slate-900'
       textColor = 'text-white'
     }

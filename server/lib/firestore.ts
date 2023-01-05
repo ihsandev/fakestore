@@ -37,6 +37,14 @@ export const updateQtyDocument = async (col:string, id:string, qty:number) => {
   }
 }
 
+export const updateDocument = async (col:string, id:string, updateData: any) => {
+  const { firestoreDb } = useFirebase()
+  const docRef = doc(firestoreDb, col, id)
+  if(id) {
+    await updateDoc(docRef, updateData)
+  }
+}
+
 export const deleteDocument = async (col:string, id:string) => {
   const { firestoreDb } = useFirebase()
   const docRef = doc(firestoreDb, col, id)

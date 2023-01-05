@@ -5,13 +5,13 @@
       <Input 
         :label="'Username Anda'"
         v-model:textValue="form.username"
-        :placeholder="'Masukkan Username (for demo use mor_2314)'"
+        :placeholder="'akun demo gunakan mor_2314'"
         :required="true"
       />
       <Input 
         :label="'Password Anda'"
         v-model:textValue="form.password"
-        :placeholder="'Masukkan Password (for demo use 83r5^_)'"
+        :placeholder="'akun demo gunakan 83r5^_'"
         :required="true"
         :type="'password'"
       />

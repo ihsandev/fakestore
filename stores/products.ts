@@ -128,6 +128,7 @@ export const useProductsStore = defineStore('products', {
           id: uniqueId(),
           userId,
           status: 'oncheckout',
+          isPay: false,
           products: newdataProducts
         }
         const res = await $fetch('/api/add-transaction', {method: 'POST', body: payload})
@@ -161,6 +162,16 @@ export const useProductsStore = defineStore('products', {
       } finally {
         this.loading = false
       }
+    },
+    async payNow(transaction:any, idx: number) {
+      const newData = [...this.transactions]
+
+      const data = await $fetch(`/api/update-transaction?id=${transaction.id}`, {method: 'PUT', body: {isPay: true}})
+      if(data.success) {
+        newData[idx].isPay = true
+      }
+
+      this.transactions = newData
     },
   }
 })

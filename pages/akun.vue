@@ -1,4 +1,5 @@
 <template>
+  <Navbar :is-account="true" :title="'Akun'" />
   <AuthSection v-if="authStore.loading" :title="'Loading..'" :loading="true">
   </AuthSection>
   <AuthSection v-if="!auth.isLogin" :title="'Anda Belum Login'">
@@ -24,6 +25,10 @@ import { useAuthStore } from '~~/stores/auth';
 
   onMounted(() => {
     authStore.getUser()
+  })
+
+  definePageMeta({
+    layout: 'base'
   })
 
 </script>
