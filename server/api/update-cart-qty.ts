@@ -1,13 +1,14 @@
-import { deleteDocument } from '../lib/firestore';
+import { updateQtyDocument } from '../lib/firestore';
 
 export default defineEventHandler(async (event:any) => { 
   try {
     const query : any = await getQuery(event);
-    await deleteDocument('carts' as string, query.id);
+    const body = await readBody(event)
+    await updateQtyDocument('carts' as string, query.id, body.qty);
     return { 
       success: true,
       data: null,
-      message: 'delete data cart success'
+      message: 'update data cart success'
     };
   } catch (error:any) {
     return { 

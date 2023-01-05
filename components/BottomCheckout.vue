@@ -3,7 +3,7 @@
     <div class="text-center bg-orange-300 flex md:w-80 items-center justify-center py-2 px-6">
       <h4 class="text-1xl md:text-4xl">{{ useFormatPrice(price) }}</h4>
     </div>
-    <div v-if="auth.isLogin && isCheckout" @click="onCheckout" class="bg-emerald-700 text-white flex-1 flex items-center justify-center cursor-pointer py-2">
+    <div v-if="auth.isLogin && isCheckout" @click.stop="onCheckout" class="bg-emerald-700 text-white flex-1 flex items-center justify-center cursor-pointer py-2">
       <span class="material-icons-outlined mr-3">
         shopping_cart_checkout
       </span>

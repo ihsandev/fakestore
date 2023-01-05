@@ -1,9 +1,9 @@
-import { addCartToCollection } from '../lib/firestore';
+import { addDocument } from '../lib/firestore';
 
 export default defineEventHandler(async (event:any) => { 
   try {
     const body = await readBody(event);
-    await addCartToCollection('carts' as string, body.id, body);
+    await addDocument('carts' as string, body.id, body);
     return { 
       success: true,
       data: null,

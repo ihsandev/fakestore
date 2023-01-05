@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDocs, increment, setDoc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, increment, query, setDoc, updateDoc, where, writeBatch } from "firebase/firestore";
 import { useFirebase } from "~~/composable/useFirebase";
 
 export const getByCollection = async (col: string) => {
@@ -17,7 +17,7 @@ export const getByCollection = async (col: string) => {
   return docs;
 };
 
-export const addCartToCollection = async (col:string, id:string, data: any) => {
+export const addDocument= async (col:string, id:string, data: any) => {
   const { firestoreDb } = useFirebase()
   data.timestamp = new Date().getTime()
   const newProduct = {...data}
@@ -27,7 +27,7 @@ export const addCartToCollection = async (col:string, id:string, data: any) => {
   }
 }
 
-export const updateCart = async (col:string, id:string, qty:number) => {
+export const updateQtyDocument = async (col:string, id:string, qty:number) => {
   const { firestoreDb } = useFirebase()
   const docRef = doc(firestoreDb, col, id)
   if(id) {
@@ -37,10 +37,34 @@ export const updateCart = async (col:string, id:string, qty:number) => {
   }
 }
 
-export const deleteCart = async (col:string, id:string) => {
+export const deleteDocument = async (col:string, id:string) => {
   const { firestoreDb } = useFirebase()
   const docRef = doc(firestoreDb, col, id)
   if(id) {
     await deleteDoc(docRef)
   }
+}
+
+export const deleteDocumentByUser = async (col:string, userId:string) => {
+  const { firestoreDb } = useFirebase()
+  const docRef = doc(firestoreDb, col, userId)
+  if(userId) {
+    await deleteDoc(docRef)
+  }
+}
+
+export const deleteByUserDocument = async (col:string, userId:string | number) => {
+  const { firestoreDb } = useFirebase()
+  const colRef = collection(firestoreDb, col);
+  const q = query(colRef, where("userId", "==", Number(userId)));
+  const batch = writeBatch(firestoreDb)
+
+  const snapshot = await getDocs(q);
+
+  Array.from(snapshot.docs).map((docSnap) => {
+    const docRef = doc(firestoreDb, col, docSnap.id)
+    batch.delete(docRef)
+  });
+
+  await batch.commit();
 }

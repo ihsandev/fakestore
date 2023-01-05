@@ -1,14 +1,13 @@
-import { updateCart } from '../lib/firestore';
+import { deleteByUserDocument } from '../lib/firestore';
 
 export default defineEventHandler(async (event:any) => { 
   try {
     const query : any = await getQuery(event);
-    const body = await readBody(event)
-    await updateCart('carts' as string, query.id, body.qty);
+    await deleteByUserDocument('carts' as string, query.userId);
     return { 
       success: true,
       data: null,
-      message: 'update data cart success'
+      message: 'delete data carts by user success'
     };
   } catch (error:any) {
     return { 

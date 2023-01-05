@@ -21,7 +21,12 @@
       :action-path="'/'" 
       :action-icon="'add_shopping_cart'" 
     />
-    <BottomCheckout v-if="productStore.carts.length" :price="showTotalPrice" :is-checkout="true"/>
+    <BottomCheckout 
+      v-if="productStore.carts.length" 
+      :price="showTotalPrice" 
+      :is-checkout="true" 
+      :on-checkout="handleCheckout"
+    />
   </section>
 </template>
 
@@ -42,6 +47,10 @@ import { useProductsStore } from '~~/stores/products';
 
   const handleRemove = (product, index) => {
     productStore.decreaseCart(product, index)
+  }
+
+  const handleCheckout = () => {
+    productStore.checkoutCart(productStore.carts)
   }
 
   definePageMeta({
